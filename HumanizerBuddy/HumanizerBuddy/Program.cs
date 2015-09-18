@@ -41,7 +41,7 @@ namespace HumanizerBuddy
 		static void Player_OnIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
 		{
 			
-			if (Game.Time < (_LastTick + _Delay))
+			if (Game.Time < (_LastTick + _Delay) && args.Order == GameObjectOrder.MoveTo)
 			{
 				args.Process = false;
 			}
