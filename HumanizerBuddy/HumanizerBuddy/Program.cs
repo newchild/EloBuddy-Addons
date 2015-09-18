@@ -47,7 +47,8 @@ namespace HumanizerBuddy
 			}
 			else
 			{
-				_LastTick = Game.Time;
+				if(args.Order == GameObjectOrder.MoveTo)
+					_LastTick = Game.Time;
 			}
 		}
 
