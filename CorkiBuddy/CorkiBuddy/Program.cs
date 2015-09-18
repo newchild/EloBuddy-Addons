@@ -91,9 +91,10 @@ namespace CorkiBuddy
 		private static void _Combo()
 		{
 			var RTarget = TargetSelector.GetTarget(1300.0f, DamageType.Magical);
+			var ETarget = TargetSelector.GetTarget(600.0f, DamageType.Physical);
 			if (_ComboSpellStatus[SpellSlot.Q].CurrentValue && _Spells[SpellSlot.Q].IsReady())
 				_Spells[SpellSlot.Q].Cast(TargetSelector.GetTarget(825.0f, DamageType.Magical));
-			if (_ComboSpellStatus[SpellSlot.E].CurrentValue && _E.IsReady())
+			if (_ComboSpellStatus[SpellSlot.E].CurrentValue && _E.IsReady() && ETarget != null)
 				_E.Cast();
 			if (_ComboSpellStatus[SpellSlot.R].CurrentValue && _Spells[SpellSlot.R].IsReady() && _Spells[SpellSlot.R].Handle.Ammo > _RocketCount.CurrentValue)
 				_Spells[SpellSlot.R].Cast(RTarget);
