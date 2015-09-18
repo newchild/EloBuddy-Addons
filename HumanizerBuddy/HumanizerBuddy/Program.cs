@@ -13,15 +13,15 @@ namespace HumanizerBuddy
 		private static Slider _DelayVal;
 		private static float _LastTick;
 		private static Menu _RootMenu;
-		private static int _Delay
+		private static float _Delay
 		{
 			get
 			{
-				return _DelayVal.CurrentValue;
+				return Convert.ToSingle(_DelayVal.CurrentValue * 0.001);
 			}
 			set
 			{
-				_DelayVal.CurrentValue = value;
+				_DelayVal.CurrentValue = Convert.ToInt32(value * 1000);
 			}
 		}
 		static void Main(string[] args)
@@ -40,9 +40,14 @@ namespace HumanizerBuddy
 
 		static void Player_OnIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
 		{
+			
 			if (Game.Time < (_LastTick + _Delay))
 			{
 				args.Process = false;
+			}
+			else
+			{
+				_LastTick = Game.Time;
 			}
 		}
 
@@ -51,6 +56,10 @@ namespace HumanizerBuddy
 			if (Game.Time < (_LastTick + _Delay))
 			{
 				args.Process = false;
+			}
+			else
+			{
+				_LastTick = Game.Time;
 			}
 		}
 	}

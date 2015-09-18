@@ -68,7 +68,6 @@ namespace CorkiBuddy
 
 		static void Game_OnTick(EventArgs args)
 		{
-			Chat.Print(_Spells[SpellSlot.R].Handle.Ammo.ToString());
 			switch (Orbwalker.ActiveModesFlags)
 			{
 				case Orbwalker.ActiveModes.Combo:
