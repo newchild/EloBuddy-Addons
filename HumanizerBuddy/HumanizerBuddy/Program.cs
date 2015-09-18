@@ -10,21 +10,9 @@ namespace HumanizerBuddy
 {
 	class Program
 	{
-		private static Slider _MoveDelayVal;
 		private static Slider _SpellDelayVal;
 		private static float _LastTick;
 		private static Menu _RootMenu;
-		private static float _MoveDelay
-		{
-			get
-			{
-				return Convert.ToSingle(_MoveDelayVal.CurrentValue * 0.001);
-			}
-			set
-			{
-				_MoveDelayVal.CurrentValue = Convert.ToInt32(value * 1000);
-			}
-		}
 		private static float _SpellDelay
 		{
 			get
@@ -44,25 +32,10 @@ namespace HumanizerBuddy
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
 			_RootMenu = MainMenu.AddMenu("HumanizerBuddy", "HumanizerBuddy");
-			_MoveDelayVal = _RootMenu.Add("MDelay", new Slider("Delay between MovementCommands", 0, 0, 800));
+			_RootMenu.AddLabel("I am crediting Trees here, because reasons :^)");
 			_SpellDelayVal = _RootMenu.Add("SDelay", new Slider("Delay between SpellCommands (Beware of prediction issues)", 0, 0, 100));
 			_LastTick = Game.Time;
 			Player.OnProcessSpellCast += Player_OnProcessSpellCast;
-			Player.OnIssueOrder += Player_OnIssueOrder;
-		}
-
-		static void Player_OnIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
-		{
-			
-			if (Game.Time < (_LastTick + _MoveDelay) && args.Order == GameObjectOrder.MoveTo)
-			{
-				args.Process = false;
-			}
-			else
-			{
-				if(args.Order == GameObjectOrder.MoveTo)
-					_LastTick = Game.Time;
-			}
 		}
 
 		static void Player_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
