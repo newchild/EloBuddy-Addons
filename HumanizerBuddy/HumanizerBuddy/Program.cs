@@ -10,18 +10,30 @@ namespace HumanizerBuddy
 {
 	class Program
 	{
-		private static Slider _DelayVal;
+		private static Slider _MoveDelayVal;
+		private static Slider _SpellDelayVal;
 		private static float _LastTick;
 		private static Menu _RootMenu;
-		private static float _Delay
+		private static float _MoveDelay
 		{
 			get
 			{
-				return Convert.ToSingle(_DelayVal.CurrentValue * 0.001);
+				return Convert.ToSingle(_MoveDelayVal.CurrentValue * 0.001);
 			}
 			set
 			{
-				_DelayVal.CurrentValue = Convert.ToInt32(value * 1000);
+				_MoveDelayVal.CurrentValue = Convert.ToInt32(value * 1000);
+			}
+		}
+		private static float _SpellDelay
+		{
+			get
+			{
+				return Convert.ToSingle(_SpellDelayVal.CurrentValue * 0.001);
+			}
+			set
+			{
+				_SpellDelayVal.CurrentValue = Convert.ToInt32(value * 1000);
 			}
 		}
 		static void Main(string[] args)
@@ -32,7 +44,8 @@ namespace HumanizerBuddy
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
 			_RootMenu = MainMenu.AddMenu("HumanizerBuddy", "HumanizerBuddy");
-			_DelayVal = _RootMenu.Add("Delay", new Slider("Delay between actions", 0, 0, 1500));
+			_MoveDelayVal = _RootMenu.Add("MDelay", new Slider("Delay between MovementCommands", 0, 0, 800));
+			_SpellDelayVal = _RootMenu.Add("SDelay", new Slider("Delay between SpellCommands (Beware of prediction issues)", 0, 0, 100));
 			_LastTick = Game.Time;
 			Player.OnProcessSpellCast += Player_OnProcessSpellCast;
 			Player.OnIssueOrder += Player_OnIssueOrder;
@@ -41,7 +54,7 @@ namespace HumanizerBuddy
 		static void Player_OnIssueOrder(Obj_AI_Base sender, PlayerIssueOrderEventArgs args)
 		{
 			
-			if (Game.Time < (_LastTick + _Delay) && args.Order == GameObjectOrder.MoveTo)
+			if (Game.Time < (_LastTick + _MoveDelay) && args.Order == GameObjectOrder.MoveTo)
 			{
 				args.Process = false;
 			}
@@ -54,7 +67,7 @@ namespace HumanizerBuddy
 
 		static void Player_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 		{
-			if (Game.Time < (_LastTick + _Delay))
+			if (Game.Time < (_LastTick + _SpellDelay))
 			{
 				args.Process = false;
 			}
