@@ -17,11 +17,11 @@ namespace HumanizerBuddy
 		{
 			get
 			{
-				return Convert.ToSingle(_SpellDelayVal.CurrentValue * 0.001);
+				return Convert.ToSingle(_SpellDelayVal.CurrentValue);
 			}
 			set
 			{
-				_SpellDelayVal.CurrentValue = Convert.ToInt32(value * 1000);
+				_SpellDelayVal.CurrentValue = Convert.ToInt32(value);
 			}
 		}
 		static void Main(string[] args)
@@ -34,19 +34,19 @@ namespace HumanizerBuddy
 			_RootMenu = MainMenu.AddMenu("HumanizerBuddy", "HumanizerBuddy");
 			_RootMenu.AddLabel("I am crediting Trees here, because reasons :^)");
 			_SpellDelayVal = _RootMenu.Add("SDelay", new Slider("Delay between SpellCommands (Beware of prediction issues)", 0, 0, 100));
-			_LastTick = Game.Time;
+			_LastTick = Environment.TickCount;
 			Player.OnProcessSpellCast += Player_OnProcessSpellCast;
 		}
 
 		static void Player_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 		{
-			if (Game.Time < (_LastTick + _SpellDelay))
+			if (Environment.TickCount < (_LastTick + _SpellDelay))
 			{
 				args.Process = false;
 			}
 			else
 			{
-				_LastTick = Game.Time;
+				_LastTick = Environment.TickCount;
 			}
 		}
 	}
