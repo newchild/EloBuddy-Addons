@@ -45,17 +45,25 @@ namespace NewchildUtils
 			Game.OnWndProc += Game_OnWndProc;
 			Chat.Print("Creating Menu");
 			_Menu = MainMenu.AddMenu("SkinHack", "skinhackMenu");
-			foreach (var hero in HeroManager.AllHeroes)
+			foreach (var hero in ObjectManager.Get<AIHeroClient>())
 			{
-				_SkinVals.Add(hero, _Menu.Add(hero.BaseSkinName, new Slider("Skin ID", 0, 0, 9)));
-				_SkinVals[hero].OnValueChange+=Program_OnValueChange;
+				if (ObjectManager.Player != hero)
+				{
+					var Slider = _Menu.Add(hero.BaseSkinName, new Slider("Skin ID " + hero.BaseSkinName, 0, 0, 9));
+					_SkinVals.Add(hero, Slider);
+					_SkinVals[hero].OnValueChange += Program_OnValueChange;
+				}
+				
 			}
+			var slid = _Menu.Add(ObjectManager.Player.BaseSkinName, new Slider("Skin ID " + ObjectManager.Player.BaseSkinName, 0, 0, 9));
+			_SkinVals.Add(ObjectManager.Player, slid);
+			_SkinVals[ObjectManager.Player].OnValueChange += Program_OnValueChange;
 
 		}
 
 		private static void Program_OnValueChange(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
 		{
-			var hero = ObjectManager.Get<AIHeroClient>().Where(x => x.BaseSkinName == sender.DisplayName).FirstOrDefault();
+			var hero = ObjectManager.Get<AIHeroClient>().Where(x => x.BaseSkinName == sender.DisplayName.Replace("Skin ID ", "")).FirstOrDefault();
 			if (hero == null)
 				return;
 			hero.SetSkinId(args.NewValue);
