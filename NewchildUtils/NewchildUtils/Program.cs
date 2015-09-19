@@ -14,7 +14,8 @@ namespace NewchildUtils
 	class Program
 	{
 		private static Dictionary<AIHeroClient, Slider> _SkinVals = new Dictionary<AIHeroClient, Slider>();
-
+		private static CheckBox _Mirror;
+		private static bool _isMirrored = false;
 		enum Keys
 		{
 			LMB = 0x01,
@@ -30,12 +31,13 @@ namespace NewchildUtils
 			Numpad9
 		}
 
-		private static Menu _Menu;
+		private static Menu _SkinMenu;
+		private static Menu _CameraMenu;
 
 		static void Main(string[] args)
 		{
 			Loading.OnLoadingComplete += Loading_OnLoadingComplete;
-			
+		
 			
 			
 		}
@@ -43,22 +45,36 @@ namespace NewchildUtils
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
 			Game.OnWndProc += Game_OnWndProc;
-			_Menu = MainMenu.AddMenu("SkinHack", "skinhackMenu");
+			_SkinMenu = MainMenu.AddMenu("Camera", "cameraMenu");
+			_SkinMenu.AddLabel("You shouldn't use it right now :P");
+			_Mirror = _SkinMenu.Add("camera.Mirror", new CheckBox("Mirror"));
+			_Mirror.CurrentValue = false;
+			_Mirror.DisplayName = "Mirror: " + _Mirror.CurrentValue.ToString();
+			_Mirror.OnValueChange += _Mirror_OnValueChange;
+			_SkinMenu = MainMenu.AddMenu("SkinHack", "skinhackMenu");
 			foreach (var hero in ObjectManager.Get<AIHeroClient>())
 			{
 				if (ObjectManager.Player != hero)
 				{
-					var Slider = _Menu.Add(hero.BaseSkinName, new Slider("Skin ID " + hero.BaseSkinName, 0, 0, 9));
+					var Slider = _SkinMenu.Add(hero.BaseSkinName, new Slider("Skin ID " + hero.BaseSkinName, 0, 0, 9));
 					_SkinVals.Add(hero, Slider);
 					_SkinVals[hero].OnValueChange += Program_OnValueChange;
 				}
 				
 			}
-			var slid = _Menu.Add(ObjectManager.Player.BaseSkinName, new Slider("Skin ID " + ObjectManager.Player.BaseSkinName, 0, 0, 9));
+			var slid = _SkinMenu.Add(ObjectManager.Player.BaseSkinName, new Slider("Skin ID " + ObjectManager.Player.BaseSkinName, 0, 0, 9));
 			_SkinVals.Add(ObjectManager.Player, slid);
 			_SkinVals[ObjectManager.Player].OnValueChange += Program_OnValueChange;
 
 		}
+
+
+		static void _Mirror_OnValueChange(ValueBase<bool> sender, ValueBase<bool>.ValueChangeArgs args)
+		{
+			Camera.RotationX += 180;
+		}
+
+		
 
 		private static void Program_OnValueChange(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
 		{
