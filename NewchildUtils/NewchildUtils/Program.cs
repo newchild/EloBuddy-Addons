@@ -43,7 +43,6 @@ namespace NewchildUtils
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
 			Game.OnWndProc += Game_OnWndProc;
-			Chat.Print("Creating Menu");
 			_Menu = MainMenu.AddMenu("SkinHack", "skinhackMenu");
 			foreach (var hero in ObjectManager.Get<AIHeroClient>())
 			{
