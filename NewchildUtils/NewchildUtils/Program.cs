@@ -41,6 +41,7 @@ namespace NewchildUtils
 
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
+			Chat.Print("Creating Menu");
 			_Menu = MainMenu.AddMenu("SkinHack", "skinhackMenu");
 			foreach (var hero in HeroManager.AllHeroes)
 			{
