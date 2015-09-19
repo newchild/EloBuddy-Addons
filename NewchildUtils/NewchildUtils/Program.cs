@@ -34,13 +34,15 @@ namespace NewchildUtils
 
 		static void Main(string[] args)
 		{
-			Game.OnWndProc += Game_OnWndProc;
-			Loading.OnLoadingComplete+=Loading_OnLoadingComplete;
+			Loading.OnLoadingComplete += Loading_OnLoadingComplete;
+			
+			
 			
 		}
 
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
+			Game.OnWndProc += Game_OnWndProc;
 			Chat.Print("Creating Menu");
 			_Menu = MainMenu.AddMenu("SkinHack", "skinhackMenu");
 			foreach (var hero in HeroManager.AllHeroes)
@@ -69,7 +71,6 @@ namespace NewchildUtils
 
 		private static void KeyDownCallBack(Keys keys)
 		{
-			Chat.Print(keys.ToString());
 			switch (keys)
 			{
 				case Keys.Numpad8:
