@@ -56,13 +56,15 @@ namespace NewchildUtils
 			{
 				if (ObjectManager.Player != hero)
 				{
-					var Slider = _SkinMenu.Add(hero.BaseSkinName, new Slider("Skin ID " + hero.BaseSkinName, 0, 0, 9));
+					var Slider = _SkinMenu.Add(hero.BaseSkinName, new Slider("Skin ID " + hero.BaseSkinName, 0, 0, 12));
+					hero.SetSkinId(Slider.CurrentValue);
 					_SkinVals.Add(hero, Slider);
 					_SkinVals[hero].OnValueChange += Program_OnValueChange;
 				}
 				
 			}
-			var slid = _SkinMenu.Add(ObjectManager.Player.BaseSkinName, new Slider("Skin ID " + ObjectManager.Player.BaseSkinName, 0, 0, 9));
+			var slid = _SkinMenu.Add(ObjectManager.Player.BaseSkinName, new Slider("Skin ID " + ObjectManager.Player.BaseSkinName, 0, 0, 12));
+			Player.SetSkinId(slid.CurrentValue);
 			_SkinVals.Add(ObjectManager.Player, slid);
 			_SkinVals[ObjectManager.Player].OnValueChange += Program_OnValueChange;
 
