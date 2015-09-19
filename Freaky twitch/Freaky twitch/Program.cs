@@ -27,7 +27,7 @@ namespace Freaky_twitch
 			if (ObjectManager.Player.BaseSkinName != "Twitch")
 				return;
 			_Menu = MainMenu.AddMenu("Freaky Twitch", "Twitch.MainMenu");
-			_Menu.Add("Twitch.UseE", new Slider("Cast E at x Stacks", 1, 5, 5));
+			_Menu.Add("Twitch.UseE", new Slider("Cast E at x Stacks", 1, 1, 5));
 			_Menu.Add("Twitch.UseW", new CheckBox("Use W in Comco"));
 			_Menu.Add("Twitch.KS", new CheckBox("Use E to KS"));
 			_W = new Spell.Skillshot(SpellSlot.W, 900, EloBuddy.SDK.Enumerations.SkillShotType.Circular, 250, 1400, 275);
@@ -74,7 +74,7 @@ namespace Freaky_twitch
 
 		private static bool _ECanKill(AIHeroClient Hero, Spell.Active _E)
 		{
-			float EDamage = Convert.ToSingle(Hero.GetBuffCount("twitchdeadlyvenom") *( _EDamage[_E.Level] + ObjectManager.Player.TotalAttackDamage * 0.25 + ObjectManager.Player.TotalMagicalDamage * 0.2));
+			float EDamage = Convert.ToSingle(Hero.GetBuffCount("twitchdeadlyvenom") *( _EDamage[_E.Level] + ObjectManager.Player.TotalAttackDamage * 0.25 + ObjectManager.Player.TotalMagicalDamage * 0.2)) - 20.0f; //Damage Calc is off
 			if (Damage.CalculateDamageOnUnit(ObjectManager.Player, Hero, DamageType.Physical, EDamage) > Hero.Health)
 				return true;
 			return false;
