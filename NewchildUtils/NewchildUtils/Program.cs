@@ -8,6 +8,7 @@ using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Events;
 using System.Threading.Tasks;
+using SharpDX;
 
 namespace NewchildUtils
 {
@@ -15,6 +16,7 @@ namespace NewchildUtils
 	{
 		private static Dictionary<AIHeroClient, Slider> _SkinVals = new Dictionary<AIHeroClient, Slider>();
 		private static CheckBox _Mirror;
+		private static float _StarterCamera;
 		private static bool _isMirrored = false;
 		enum Keys
 		{
@@ -44,10 +46,13 @@ namespace NewchildUtils
 
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
+			_StarterCamera = Camera.RotationX;
+			Game.OnTick+=Game_OnTick;
 			Game.OnWndProc += Game_OnWndProc;
-			_SkinMenu = MainMenu.AddMenu("Camera", "cameraMenu");
-			_SkinMenu.AddLabel("You shouldn't use it right now :P");
-			_Mirror = _SkinMenu.Add("camera.Mirror", new CheckBox("Mirror"));
+			_CameraMenu = MainMenu.AddMenu("Camera", "cameraMenu");
+			_CameraMenu.AddLabel("You shouldn't use it right now :P");
+			_Mirror = _CameraMenu.Add("camera.Mirror", new CheckBox("Mirror"));
+			_CameraMenu.Add("camera.Reset", new KeyBind("Reset", false, KeyBind.BindTypes.HoldActive, 'o'));
 			_Mirror.CurrentValue = false;
 			_Mirror.DisplayName = "Mirror: " + _Mirror.CurrentValue.ToString();
 			_Mirror.OnValueChange += _Mirror_OnValueChange;
@@ -68,6 +73,14 @@ namespace NewchildUtils
 			_SkinVals.Add(ObjectManager.Player, slid);
 			_SkinVals[ObjectManager.Player].OnValueChange += Program_OnValueChange;
 
+		}
+
+		static void Game_OnTick(EventArgs args)
+		{
+			if (_CameraMenu["camera.Reset"].Cast<KeyBind>().CurrentValue)
+			{
+				Camera.RotationX = _StarterCamera;
+			}
 		}
 
 
