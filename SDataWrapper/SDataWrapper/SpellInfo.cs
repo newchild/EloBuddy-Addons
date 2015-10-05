@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace SpellInfo
 {
-		class SpellInfo
+		public class SpellInfo
 		{
 			private SpellData _Data;
 			private SpellSlot _Slot;
-			private List<string> hardCC = new List<string>();
 			private GameObjectProcessSpellCastEventArgs _Event;
+
 			public SpellInfo(GameObjectProcessSpellCastEventArgs SpellEvent)
 			{
 				_Data = SpellEvent.SData;
@@ -41,9 +41,7 @@ namespace SpellInfo
 			/// <returns></returns>
 			public Spell.SpellBase generateSpell(int rangeOffset = 0, int castDelayOffset = 0, int missileSpeedOffset = 0, int widthOffset = 0)
 			{
-
-				if(isChannel())
-					throw new Exception("Channeled Spells are not supported at the moment");
+				
 				if (isTargeted())
 				{
 					return new Spell.Targeted(_Slot, (uint) getRange());
@@ -51,19 +49,19 @@ namespace SpellInfo
 				return new Spell.Skillshot(_Slot, (uint) (getRange() + rangeOffset), getSkillShotType(), (int)( getCastDelay() * 1000 + castDelayOffset), (int)(getMissileSpeed() * 1000 + missileSpeedOffset), (int)(getWidth() * 1000 + widthOffset));
 			}
 
+			
+
 			public bool isChannel()
 			{
-				return _Data.UseChargeTargeting != 0.0f;
+				return _Data.ChannelDuration >= 0.0f;
+				
 			}
 
-			public bool appliesHardCC()
+			public bool isToggle()
 			{
-				if(!_Data.HaveHitEffect)
-					return false;
-				if(hardCC.Contains(_Data.HitEffectName))
-					return true;
-				return false;
+				return _Data.IsToggleSpell;
 			}
+		
 
 			public SkillShotType getSkillShotType()
 			{
@@ -86,6 +84,8 @@ namespace SpellInfo
 			{
 				return _Data.MissileSpeed;
 			}
+
+			
 
 			public float getCastDelay()
 			{
@@ -115,10 +115,7 @@ namespace SpellInfo
 				return _Data.LineWidth;
 			}
 
-			public bool minionCollision()
-			{
-				return (_Data.ExcludedUnitTags == 0);
-			}
+			
 		
 	}
 }
