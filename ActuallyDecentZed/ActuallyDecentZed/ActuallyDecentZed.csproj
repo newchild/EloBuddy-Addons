@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ComboExecutor.cs" />
     <Compile Include="ComboLogic.cs" />
+    <Compile Include="NewTargetSelector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShadowManager.cs" />

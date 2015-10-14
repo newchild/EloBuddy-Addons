@@ -35,6 +35,27 @@ namespace ActuallyDecentZed
 			}
 		}
 
+		public static SpellManager getInstance()
+		{
+			return Instance;
+		}
+
+		public float getRange(SpellSlot slot)
+		{
+			switch (slot)
+			{
+				case SpellSlot.Q:
+					return _Q.Range;
+				case SpellSlot.W:
+					return _W.Range;
+				case SpellSlot.E:
+					return _E.Range;
+				case SpellSlot.R:
+					return _R.Range;
+			}
+			return 0;
+		}
+
 		public bool isSpellReady(SpellSlot slot)
 		{
 			switch (slot)
