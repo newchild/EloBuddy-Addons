@@ -196,9 +196,17 @@ namespace ActuallyDecentZed
 
 		private newTargetSelector(HumanMode mode, SelectionMode selectMode)
 		{
+			_SetupMenu();
 			_ActiveMode = mode;
 			_LastTick = Environment.TickCount;
 			_ActiveSelectionMode = selectMode;
+		}
+
+		public static newTargetSelector getInstance()
+		{
+			if (_Instance == null)
+				_Instance = new newTargetSelector(HumanMode.Human, SelectionMode.NearMouse);
+			return _Instance;
 		}
 
 		public static newTargetSelector Instance

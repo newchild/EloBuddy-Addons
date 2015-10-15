@@ -13,27 +13,23 @@ namespace ActuallyDecentZed
 	{
 		public static void CastLineComboOnto(Obj_AI_Base target)
 		{
+			if (!SpellManager.Instance.isSpellReady(SpellSlot.R) && !ShadowManager.UltShadowManager.Instance.getUltimateShadow().isValid())
+			{
+				return;
+			}
+
 			if (!SpellManager.Instance.isSpellReady(SpellSlot.R))
 			{
-				if (ComboLogic.isRActive)
+				if (ShadowManager.UltShadowManager.Instance.getUltimateShadow().getRemainingTicks() >= 5500)
 				{
-					if (!SpellManager.Instance.isSpellReady(SpellSlot.W))
-					{
-						if (ComboLogic.isWActive)
-						{
-							ExecuteLineCombo(target);
-						}
-						else
-						{
-							return;
-						}
-					}	
+					LineComboStage2(target);
 				}
 				else
 				{
 					return;
 				}
 			}
+
 			else
 			{
 				ExecuteLineCombo(target);
@@ -49,8 +45,8 @@ namespace ActuallyDecentZed
 
 		private static void LineComboStage2(Obj_AI_Base target)
 		{
-			Vector3 WPos = ShadowManager.UltShadowManager.Instance.getUltimateShadows().FirstOrDefault().getPosition()
-				.Extend(Player.Instance, Player.Instance.Distance(ShadowManager.UltShadowManager.Instance.getUltimateShadows().FirstOrDefault().getPosition()) + 550).To3D();
+			Vector3 WPos = ShadowManager.UltShadowManager.Instance.getUltimateShadow().getPosition()
+				.Extend(Player.Instance, Player.Instance.Distance(ShadowManager.UltShadowManager.Instance.getUltimateShadow().getPosition()) + 550).To3D();
 			SpellManager.Instance.Cast(SpellSlot.W, WPos);
 			Core.DelayAction(() => { LineComboStage3(target); }, 250);
 		}

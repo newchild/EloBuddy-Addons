@@ -18,30 +18,26 @@ namespace ActuallyDecentZed
 		{
 			private static UltShadowManager _Instance;
 
-			private List<UltShadow> _Shadows;
+			private UltShadow _Shadow;
 
-			public List<UltShadow> getUltimateShadows()
+			public UltShadow getUltimateShadow()
 			{
-				foreach (var shadow in _Shadows)
-				{
-					if (!shadow.isValid())
-						_Shadows.Remove(shadow);
-				}
-				return _Shadows;
+				if(!_Shadow.isValid())
+					_Shadow = null;
+				return _Shadow;
 			}
 
 			private UltShadowManager()
 			{
-				_Shadows = new List<UltShadow>();
 				AIHeroClient.OnProcessSpellCast+=AIHeroClient_OnProcessSpellCast;
 			}
 
 			private void AIHeroClient_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 			{
-				if (sender.IsMe && args.Slot == SpellSlot.R && args.SData.Name.Contains("1"))
-					_Shadows.Add(new UltShadow(sender.ServerPosition));
+				if (sender.IsMe && args.Slot == SpellSlot.R && args.SData.Name.Contains("1")) //Placeholder
+					_Shadow = new UltShadow(sender.ServerPosition);
 				if (sender.IsMe && args.Slot == SpellSlot.R && args.SData.Name.Contains("2"))
-					_Shadows.FirstOrDefault().updatePosition(sender.ServerPosition);
+					_Shadow.updatePosition(sender.ServerPosition);
 
 			}
 
@@ -83,6 +79,11 @@ namespace ActuallyDecentZed
 			{
 				return _Position;
 			}
+
+			public int getRemainingTicks()
+			{
+				return expiration - Environment.TickCount;
+			}
 		}
 
 		public class WShadow
@@ -111,36 +112,34 @@ namespace ActuallyDecentZed
 			{
 				return _Position;
 			}
+
+			
 		}
 
 		public class WShadowManager
 		{
 			private static WShadowManager _Instance;
 
-			private List<WShadow> _Shadows;
+			private WShadow _Shadow;
 
-			public List<WShadow> getWShadows()
+			public WShadow getWShadow()
 			{
-				foreach (var shadow in _Shadows)
-				{
-					if (!shadow.isValid())
-						_Shadows.Remove(shadow);
-				}
-				return _Shadows;
+				if (!_Shadow.isValid())
+					_Shadow = null;
+				return _Shadow;
 			}
 
 			private WShadowManager()
 			{
-				_Shadows = new List<WShadow>();
 				AIHeroClient.OnProcessSpellCast+=AIHeroClient_OnProcessSpellCast;
 			}
 
 			private void AIHeroClient_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 			{
 				if (sender == Player.Instance && args.Slot == SpellSlot.W && args.SData.Name.Contains("1"))
-					_Shadows.Add(new WShadow(calculateShadowPos(Player.Instance.Position, Player.Instance.Direction)));
+					_Shadow = new WShadow(calculateShadowPos(Player.Instance.Position, Player.Instance.Direction));
 				if (sender == Player.Instance && args.Slot == SpellSlot.W && args.SData.Name.Contains("2"))
-					_Shadows.FirstOrDefault().updatePosition(sender.ServerPosition);
+					_Shadow.updatePosition(sender.ServerPosition);
 
 			}
 
