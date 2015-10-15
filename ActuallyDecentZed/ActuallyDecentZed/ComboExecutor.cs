@@ -15,7 +15,8 @@ namespace ActuallyDecentZed
 			{
 				if (ComboLogic.isRActive)
 				{
-
+					SpellManager.Instance.Cast(SpellSlot.Q, Player.Instance.Position);
+					
 				}
 			}
 		}

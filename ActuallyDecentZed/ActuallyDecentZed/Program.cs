@@ -12,6 +12,7 @@ namespace ActuallyDecentZed
 		static void Main(string[] args)
 		{
 			newTargetSelector.Instance.getTarget(SpellManager.Instance.getRange(SpellSlot.Q));
+			var UltShadowPosition = ShadowManager.UltShadowManager.Instance.getUltimateShadows().FirstOrDefault().getPosition();
 		}
 	}
 }
