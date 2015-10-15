@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ActuallyDecentZed
 {
-	class ComboLogic
+	class MenuManager
 	{
-		public static bool isRActive = false;
-		public static bool isWActive = false;
+
 	}
 }

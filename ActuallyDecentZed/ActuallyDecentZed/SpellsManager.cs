@@ -82,7 +82,7 @@ namespace ActuallyDecentZed
 				case SpellSlot.W:
 					return _W.Cast(target);
 				case SpellSlot.E:
-					return _E.Cast(target);
+					return _E.Cast();
 				case SpellSlot.R:
 					return _R.Cast(target);
 			}

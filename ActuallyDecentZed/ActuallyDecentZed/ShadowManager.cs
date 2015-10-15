@@ -16,7 +16,7 @@ namespace ActuallyDecentZed
 	{
 		public class UltShadowManager
 		{
-			private UltShadowManager _Instance;
+			private static UltShadowManager _Instance;
 
 			private List<UltShadow> _Shadows;
 
@@ -115,7 +115,7 @@ namespace ActuallyDecentZed
 
 		public class WShadowManager
 		{
-			private WShadowManager _Instance;
+			private static WShadowManager _Instance;
 
 			private List<WShadow> _Shadows;
 

@@ -1,4 +1,5 @@
 ﻿using EloBuddy;
+using EloBuddy.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace ActuallyDecentZed
 	{
 		static void Main(string[] args)
 		{
-			newTargetSelector.Instance.getTarget(SpellManager.Instance.getRange(SpellSlot.Q));
-			var UltShadowPosition = ShadowManager.UltShadowManager.Instance.getUltimateShadows().FirstOrDefault().getPosition();
+			if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
+				ComboExecutor.CastLineComboOnto(TargetSelector.GetTarget(450, DamageType.Mixed));
 		}
 	}
 }
