@@ -26,7 +26,7 @@ namespace AutoAim
 			},
 			#endregion
 			#region Ahri
-			{ Champion.Aatrox, new SpellInstance()
+			{ Champion.Ahri, new SpellInstance()
 				{
 					Q = new Spell.Skillshot(SpellSlot.Q, 925, SkillShotType.Circular, 250, 1750, 100 ),
 					E = new Spell.Skillshot(SpellSlot.E, 1000, SkillShotType.Linear, 250, 1550, 60 ),
@@ -35,9 +35,32 @@ namespace AutoAim
 					EIsSkillShot = true,
 					RIsSkillShot = false
 				}
-			}
+			},
 			#endregion
-			
+			#region Amumumu
+			{ Champion.Amumu, new SpellInstance()
+				{
+					Q = new Spell.Skillshot(SpellSlot.Q, 1100, SkillShotType.Circular, 250, 2000, 80 ),
+					QIsSkillShot = true,
+					WIsSkillShot = false,
+					EIsSkillShot = false,
+					RIsSkillShot = false
+				}
+			},
+			#endregion
+			#region Annie
+			{ Champion.Amumu, new SpellInstance()
+				{
+					Q = new Spell.Skillshot(SpellSlot.Q, 600, SkillShotType.Circular, 250, int.MaxValue, 290 ),
+					QIsSkillShot = false,
+					WIsSkillShot = false,
+					EIsSkillShot = false,
+					RIsSkillShot = true
+				}
+			},
+			#endregion
+
+
 		};
 	}
 

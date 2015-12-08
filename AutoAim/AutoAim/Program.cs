@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
+using EloBuddy.SDK.Menu;
 
 namespace AutoAim
 {
 	class Program
 	{
+		private static Menu _AutoAimMenu;
 		private static Dictionary<SpellSlot, bool> isAddonCasted = new Dictionary<SpellSlot, bool>() { { SpellSlot.Q, false }, { SpellSlot.W, false }, { SpellSlot.E, false }, { SpellSlot.R, false } };
         static void Main(string[] args)
 		{
+			
 			if (!Spells.SpellInstances.Keys.Contains(Player.Instance.Hero))
 				return;
 			Loading.OnLoadingComplete += Loading_OnLoadingComplete;
@@ -22,6 +25,11 @@ namespace AutoAim
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
 			Player.OnSpellCast += Player_OnSpellCast;
+			_AutoAimMenu = MainMenu.AddMenu("AutoAIM", "AutoAim");
+			_AutoAimMenu.AddLabel("Addon created by newchild. Supported champs: Aatrox, Ahri, Amumumu, Annie");
+			_AutoAimMenu.AddLabel("Quality right now is meh, but it works. Casting logic needs a rework");
+			_AutoAimMenu.AddLabel("Basically you just have to cast Skillshots and it will try to aim for you or block the spell. RiP brain");
+			_AutoAimMenu.AddLabel("PLEASE LEAVE FEEDBACK, SINCE MY CASTING LOGIC NEEDS IMPROVEMENT BUT I NEED EMPIRICAL DATA");
 		}
 
 		private static AIHeroClient NearMouseSelect()
