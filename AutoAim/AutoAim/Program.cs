@@ -24,7 +24,7 @@ namespace AutoAim
 
 		private static void Loading_OnLoadingComplete(EventArgs args)
 		{
-			Player.OnSpellCast += Player_OnSpellCast;
+			Player.OnProcessSpellCast += Player_OnSpellCast;
 			_AutoAimMenu = MainMenu.AddMenu("AutoAIM", "AutoAim");
 			_AutoAimMenu.AddLabel("Addon created by newchild. Supported champs: Aatrox, Ahri, Amumumu, Annie");
 			_AutoAimMenu.AddLabel("Quality right now is meh, but it works. Casting logic needs a rework");
@@ -32,6 +32,8 @@ namespace AutoAim
 			_AutoAimMenu.AddLabel("PLEASE LEAVE FEEDBACK, SINCE MY CASTING LOGIC NEEDS IMPROVEMENT");
 			_AutoAimMenu.AddLabel("BUT I NEED EMPIRICAL DATA");
         }
+
+		
 
 		private static AIHeroClient NearMouseSelect()
 		{ 
