@@ -82,6 +82,8 @@ namespace AutoAim
 						Spells.SpellInstances[Player.Instance.Hero].R.Cast(NearMouseSelect());
 					}
 					break;
+				default:
+					return;
 			}
 		}
 	}
