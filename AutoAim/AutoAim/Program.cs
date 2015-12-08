@@ -80,6 +80,7 @@ namespace AutoAim
 					if (Spells.SpellInstances[Player.Instance.Hero].RIsSkillShot)
 					{
 						args.Process = false;
+						Console.Write(args.Process.ToString());
 						isAddonCasted[args.Slot] = true;
 						Spells.SpellInstances[Player.Instance.Hero].R.Cast(NearMouseSelect());
 					}
