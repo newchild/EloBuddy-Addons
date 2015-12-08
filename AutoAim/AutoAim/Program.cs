@@ -29,8 +29,9 @@ namespace AutoAim
 			_AutoAimMenu.AddLabel("Addon created by newchild. Supported champs: Aatrox, Ahri, Amumumu, Annie");
 			_AutoAimMenu.AddLabel("Quality right now is meh, but it works. Casting logic needs a rework");
 			_AutoAimMenu.AddLabel("Basically you just have to cast Skillshots and it will try to aim for you or block the spell. RiP brain");
-			_AutoAimMenu.AddLabel("PLEASE LEAVE FEEDBACK, SINCE MY CASTING LOGIC NEEDS IMPROVEMENT BUT I NEED EMPIRICAL DATA");
-		}
+			_AutoAimMenu.AddLabel("PLEASE LEAVE FEEDBACK, SINCE MY CASTING LOGIC NEEDS IMPROVEMENT");
+			_AutoAimMenu.AddLabel("BUT I NEED EMPIRICAL DATA");
+        }
 
 		private static AIHeroClient NearMouseSelect()
 		{ 
@@ -41,6 +42,7 @@ namespace AutoAim
 
 	private static void Player_OnSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 		{
+			Console.WriteLine(args.Slot.ToString());
 			if (isAddonCasted[args.Slot])
 			{
 				isAddonCasted[args.Slot] = false;
