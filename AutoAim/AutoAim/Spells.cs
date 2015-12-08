@@ -49,7 +49,7 @@ namespace AutoAim
 			},
 			#endregion
 			#region Annie
-			{ Champion.Amumu, new SpellInstance()
+			{ Champion.Annie, new SpellInstance()
 				{
 					Q = new Spell.Skillshot(SpellSlot.Q, 600, SkillShotType.Circular, 250, int.MaxValue, 290 ),
 					QIsSkillShot = false,
