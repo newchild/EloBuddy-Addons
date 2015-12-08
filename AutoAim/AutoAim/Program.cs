@@ -43,6 +43,8 @@ namespace AutoAim
 	private static void Player_OnSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 		{
 			Console.WriteLine(args.Slot.ToString());
+			if ((int)args.Slot > 3)
+				return;
 			if (isAddonCasted[args.Slot])
 			{
 				isAddonCasted[args.Slot] = false;
